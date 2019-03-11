@@ -74,14 +74,50 @@
 </style>
 
 <script>
+    
+    // Bilderauswahl aus Galerie
+    var indexCurrentPicture;
     var bildergalerie = document.getElementsByClassName("slideshow");
     for(let i=0; i<bildergalerie.length; i++){
         bildergalerie[i].addEventListener("click", show);
     }
     
+    // Bilderauswahl mit Buttons
+    var buttonNext = document.getElementById("rightClick").addEventListener("click", nextPicture);
+    var buttonPrevious = document.getElementById("leftClick").addEventListener("click", previousPicture);
+    
     function show(){
         console.log(this);
         var bildquelle = this.src;
         document.getElementById("BildZentriert").src = bildquelle;
+        indexCurrentPicture = getPosition();
+        console.log(indexCurrentPicture);
     }
+    
+    function getPosition(){
+        for(let i=0; i<bildergalerie.length; i++){
+            if(bildergalerie[i].src==document.getElementById("BildZentriert").src){
+                return i;
+            }
+        }
+    }
+    
+    function nextPicture(){
+        if(indexCurrentPicture<bildergalerie.length-1){
+            document.getElementById("BildZentriert").src = bildergalerie[indexCurrentPicture+1].src;
+            indexCurrentPicture++;
+        }else{
+            console.log("Ende des Arrays erreicht!");
+        }
+    }
+    
+    function previousPicture(){
+        if(indexCurrentPicture>0){
+            document.getElementById("BildZentriert").src = bildergalerie[indexCurrentPicture-1].src;
+            indexCurrentPicture--;
+        }else{
+            console.log("Anfang des Arrays erreicht!");
+        }
+    }
+    
 </script>
